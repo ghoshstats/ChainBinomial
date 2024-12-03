@@ -132,3 +132,37 @@ result <- fit_chain_beta_binomial(data)
 cat("SAR Mean:", result$SAR_mean, "\n")
 cat("SAR 95% Credible Interval:", result$SAR_cred_int, "\n")
 cat("Beta Vaccination 95% Credible Interval:", result$beta_vaccination_cred_int, "\n")
+
+##### Prior Choice using empirical Bayes #####
+
+# Example data
+data <- data.frame(
+  y = c(2, 1, 3, 0, 1),
+  n = c(10, 8, 12, 6, 9),
+  age = c(30, 45, 25, 60, 35),
+  vaccination_status = c(1, 0, 1, 0, 1)
+)
+
+# Empirical Bayes estimation
+mean_y <- mean(data$y)
+sd_y <- sd(data$y)
+mean_age <- mean(data$age)
+sd_age <- sd(data$age)
+mean_vaccination <- mean(data$vaccination_status)
+#sd_vaccination <- sd(data$vaccination_status)
+sd_vaccination <- 0.5
+
+empirical_priors <- list(
+  alpha_mean = mean_y,
+  alpha_sd = sd_y,
+  beta_age_mean = mean_age,
+  beta_age_sd = sd_age,
+  beta_vaccination_mean = mean_vaccination,
+  beta_vaccination_sd = sd_vaccination,
+  phi_mean = 1,
+  phi_sd = 1
+)
+
+#print(empirical_priors)
+
+
